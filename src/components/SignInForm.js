@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-
+import {
+  Container, Col, Form,
+  FormGroup, Label, Input,
+  Button
+} from 'reactstrap';
+import { NavLink } from 'react-router-dom';
 
 class SignInForm extends Component {
     constructor(props) {
@@ -27,6 +32,7 @@ class SignInForm extends Component {
     });
   }
     handleSubmit(event) {
+      console.log("HERE")
         event.preventDefault();
 
     var apiBaseUrl = "http://localhost:5000/login";
@@ -37,6 +43,9 @@ class SignInForm extends Component {
       "password":this.state.fields['password']
       
     }
+    console.log(payload);
+    console.log(this.validateForm());
+    console.log(this.state.errors);
     var config = {
         
         header: {'Access-Control-Allow-Origin': '*'}
@@ -44,22 +53,13 @@ class SignInForm extends Component {
 };
     if (this.validateForm()) {
     axios.post(apiBaseUrl, payload, config).then(function (response) 
-   {
-      console.log(response);
-      
-      
+   {  
         if (response.data.status === 200 ) 
         {
-       
-          self.props.history.push
-        
-           (
-      
-             {
+          self.props.history.push({
             pathname: '/home',
             state: {email: self.state.fields['email'],aid: response.data.aid}
-            }
-           );
+            });
         }
         else if(response.data.status === 401)
         {
@@ -84,8 +84,6 @@ class SignInForm extends Component {
     });
     event.preventDefault();
   }
-  //else
-  //{alert("Fill the form details");}
   }
   validateForm() {
 
@@ -94,11 +92,11 @@ class SignInForm extends Component {
     let formIsValid = true;
     if (!fields["email"]) {
       formIsValid = false;
-      errors["email"] = "*Please enter your username.";
+      errors["email"] = "*Please enter your Email";
     }
     if (!fields["password"]) {
       formIsValid = false;
-      errors["password"] = "*Please enter your email-ID.";
+      errors["password"] = "*Please enter your Password";
     }
     this.setState({
       errors: errors
@@ -107,32 +105,43 @@ class SignInForm extends Component {
 
   }
    render() {
-   
-        return (
-         
-        <div className="FormCenter">
         
-        <form className="FormFields" onSubmit={this.handleSubmit}>
-            <div className="FormField">
-                <label className="FormField__Label" htmlFor="email">E-Mail Address</label>
-                <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" value={this.state.email} onChange={this.handleChange} />
-                <div>{this.state.errors.email}</div>
-              </div>
-
-              <div className="FormField">
-                <label className="FormField__Label" htmlFor="password">Password</label>
-                <input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange} />
-                <div>{this.state.errors.password}</div>
-              </div>
-
-              <div className="FormField">
-                  <button className="FormField__Button mr-20">Sign In</button> 
-              </div> 
-             
-          </form>
-         </div>
-          
-          
+        return (
+          <Container className="Login">
+          <h2>Sign In</h2>
+          <Form className="form" onSubmit={this.handleSubmit}>
+            <Col>
+              <FormGroup>
+                <Label>Email<span className="text-danger">*</span></Label>
+                <Input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="myemail@email.com"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                />
+                <div className="text-danger">{this.state.errors.email}</div>
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label for="Password">Password<span className="text-danger">*</span></Label>
+                <Input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="********"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                />
+                <div className="text-danger">{this.state.errors.password}</div>
+              </FormGroup>
+            </Col>
+            <Button>Sign In</Button>&emsp;
+            <NavLink to="/register" >Register</NavLink>
+          </Form>
+        </Container>
         );
     }
 }

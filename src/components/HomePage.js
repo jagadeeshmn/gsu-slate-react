@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, NavLink } from 'react-router-dom';
+import {Container} from 'reactstrap';
 
 class MenuForm extends Component {
     constructor(props) {
@@ -26,13 +27,14 @@ class MenuForm extends Component {
     render() {
         const aid = this.props.location.state.aid
         return (
-          <div className="App">
+          <Container className="Login">
+            <div className="App">
           <div className="App__Form">
-          <h1>{aid}</h1>
           <form className="FormFields" onSubmit={this.handleSubmit}>
-          <div className="FormField">
-                  <button className="FormField__Button mr-20">Sign Out</button> 
+          <div className="FormField" style={{textAlign:"right"}}>
+                  <button className="FormField__Button mr-20"  >Sign Out</button> 
           </div>
+          <br />
           </form> 
           <p>
              <b>
@@ -48,6 +50,8 @@ class MenuForm extends Component {
            </p> 
          </div>  
          </div>
+          </Container>
+          
   
         );
    }

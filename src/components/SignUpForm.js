@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-
+import {
+  Container, Col, Form,
+  FormGroup, Label, Input,
+  Button
+} from 'reactstrap';
+import { NavLink } from 'react-router-dom';
 class SignUpForm extends Component 
 {
     constructor() 
@@ -48,7 +53,7 @@ class SignUpForm extends Component
       };
       if (this.validateForm()) 
       {
-      axios.post(apiBaseUrl, payload, config).then(function (response) 
+      axios.post(apiBaseUrl, payload, config).then(function (response)
        {
         console.log(response);
         
@@ -97,19 +102,19 @@ class SignUpForm extends Component
       let formIsValid = true;
       if (!fields["email"]) {
         formIsValid = false;
-        errors["email"] = "*Please enter your email.";
+        errors["email"] = "*Please enter your Email";
       }
       if (!fields["fname"]) {
         formIsValid = false;
-        errors["fname"] = "*Please enter your firstname.";
+        errors["fname"] = "*Please enter your First Name";
       }
       if (!fields["lname"]) {
         formIsValid = false;
-        errors["lname"] = "*Please enter your lastname.";
+        errors["lname"] = "*Please enter your Last Name";
       }
       if (!fields["password"]) {
         formIsValid = false;
-        errors["password"] = "*Please enter your password.";
+        errors["password"] = "*Please enter your Password";
       }
       this.setState({
         errors: errors
@@ -121,33 +126,69 @@ class SignUpForm extends Component
     render() 
     {
         return (
-        <div className="FormCenter">
-            <form onSubmit={this.handleSubmit} className="FormFields">
-              <div className="FormField">
-                <label className="FormField__Label" htmlFor="fname">First Name</label>
-                <input type="text" id="name" className="FormField__Input" placeholder="Enter your first name" name="fname" value={this.state.fname} onChange={this.handleChange} />
-                <div>{this.state.errors.fname}</div>
-              </div>
-              <div className="FormField">
-                <label className="FormField__Label" htmlFor="lname">Last Name</label>
-                <input type="text" id="lname" className="FormField__Input" placeholder="Enter your last name" name="lname" value={this.state.lname} onChange={this.handleChange} />
-                <div>{this.state.errors.lname}</div>
-              </div>
-              <div className="FormField">
-                <label className="FormField__Label" htmlFor="password">Password</label>
-                <input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange} />
-                <div>{this.state.errors.password}</div>
-              </div>
-              <div className="FormField">
-                <label className="FormField__Label" htmlFor="email">E-Mail Address</label>
-                <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" value={this.state.email} onChange={this.handleChange} />
-                <div>{this.state.errors.email}</div>
-              </div>
-            <div className="FormField">
-                  <button className="FormField__Button mr-20">Sign Up</button> 
-              </div>
-            </form>
-          </div>
+          <Container className="Login">
+          <h2>Sign Up</h2>
+          <Form className="form" onSubmit={this.handleSubmit}>
+            <Col>
+              <FormGroup>
+                <Label>Email<span className="text-danger">*</span></Label>
+                <Input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="myemail@email.com"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                />
+                <div className="text-danger">{this.state.errors.email}</div>
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label>First Name<span className="text-danger">*</span></Label>
+                <Input
+                  type="text"
+                  name="fname"
+                  id="fname"
+                  placeholder="First Name"
+                  value={this.state.fname}
+                  onChange={this.handleChange}
+                />
+                <div className="text-danger">{this.state.errors.fname}</div>
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label>Last Name<span className="text-danger">*</span></Label>
+                <Input
+                  type="text"
+                  name="lname"
+                  id="lname"
+                  placeholder="Last Name"
+                  value={this.state.lname}
+                  onChange={this.handleChange}
+                />
+                <div className="text-danger">{this.state.errors.lname}</div>
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label for="Password">Password<span className="text-danger">*</span></Label>
+                <Input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="********"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                />
+                <div className="text-danger">{this.state.errors.password}</div>
+              </FormGroup>
+            </Col>
+            <Button>Sign Up</Button>&emsp;
+            <NavLink to="/login" >Login</NavLink>
+          </Form>
+        </Container>
         );
     }
   }

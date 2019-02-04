@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {Container,Button} from 'reactstrap';
 
 class ApplicationForm extends Component {
   constructor(props) {
@@ -109,8 +110,11 @@ validateForm() {
     render() 
     {
    return (
-    <div>
+
+    <Container className="Login">
+      <div>
     <form onSubmit={this.handleSubmit}>
+    <label>Select Department</label>
        <select value={this.state.dname} name="dname" onChange={this.handleChange}>
           <option value="">--- Select Department-Name --</option>
           <option value="CSC">Computer Science</option>
@@ -118,6 +122,7 @@ validateForm() {
        </select>
        <div>{this.state.errors.dname}</div>
           <br></br>
+          <label>Select Program</label>   
        <select value={this.state.program} name="program" onChange={this.handleChange}>
           <option value="">--- Select Program --</option>
           <option value="MS">Master's</option>
@@ -125,6 +130,7 @@ validateForm() {
        </select>
        <div>{this.state.errors.program}</div>
           <br></br>
+          <label>Select Term</label>
        <select  value={this.state.termofAdmission} name="termofAdmission" onChange={this.handleChange}>
           <option value="">--- Select Term --</option>
           <option value="SP">Spring</option>
@@ -133,14 +139,18 @@ validateForm() {
        </select>
        <div>{this.state.errors.termofAdmission}</div>
        <br></br>
-        <label htmlFor="yearofAdmission">yearofAdmission::</label>
+        <label htmlFor="yearofAdmission">Year of Admission</label>
         <input type="number" max="2099" min="2000" id="GREA" placeholder="Enter the joining year" name="yearofAdmission" value={this.state.yearofadmission} onChange={this.handleChange} />
         <div>{this.state.errors.yearofAdmission}</div>
+        <br />
         <div className="FormField">
-          <button className="FormField__Button mr-20">Submit</button> 
+        <Button color="success" size="block">Apply</Button>
+          
       </div> 
   </form>
    </div>
+    </Container>
+    
 );
   }
 }

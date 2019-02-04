@@ -1,7 +1,7 @@
 import React,{Component} from "react";
 import axios from "axios";
 import { Table } from 'reactstrap';
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 class ApplicationList extends Component{
     constructor(){

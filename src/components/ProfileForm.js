@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import {Container} from 'reactstrap';
+import {NotificationManager} from "react-notifications";
 
 class ProfileForm extends Component {
   constructor(props) {
@@ -70,6 +72,7 @@ axios.post(apiBaseUrl, payload, config).then(function (response)
     //alert(response.data.status);
     if (response.data.status === 200 ) 
     {
+      NotificationManager.success('Success','Profile updated');
       self.props.history.push(
         {
           pathname: '/home',
@@ -78,7 +81,7 @@ axios.post(apiBaseUrl, payload, config).then(function (response)
     }
     else if(response.data.status === 404)
     {
-      alert("Invalid credentials");
+      NotificationManager.error('Unable to update Profile','');
       self.props.history.push({
         pathname: '/login'
        
@@ -158,7 +161,8 @@ event.preventDefault();
       }
     render() {
    return (
-    <div className="FormCenter">
+    <Container className="Login">
+      <div className="FormCenter" >
     <form className="FormFields" onSubmit={this.handleSubmit}>
       <div className="FormField">
         <label className="FormField__Label" htmlFor="fname">First-Name</label>
@@ -220,6 +224,8 @@ event.preventDefault();
       </div>     
   </form>
   </div>
+    </Container>
+    
 );
   }
 }
